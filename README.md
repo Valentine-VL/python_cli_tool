@@ -21,12 +21,15 @@
 
 Follow these steps to set up and run application on your local machine:
 
-### Clone the Repository
+### Clone the Repository and setup
 Create a fodler where you want to store the project. After that run:
 
 ```bash
 git clone https://github.com/Valentine-VL/python_cli_tool.git
 cd python_cli_tool
+python -m venv venv
+source venv/bin/activate
+python pip install -r requirements.txt
 ```
 ## Instructions
 

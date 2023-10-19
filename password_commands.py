@@ -42,9 +42,9 @@ def get_pass(ctx, name):
 
 
 @click.command()
-@click.option("--name", prompt=True, required=True)
+@click.option("--name", prompt=True, required=True, type=str)
 @click.pass_context
-def change_pass(ctx, name):
+def delete_pass(ctx, name):
     db = ctx.obj.get("db")
     db.delete_password(name)
     click.echo(f"Password {name} has been deleted")
@@ -56,7 +56,7 @@ def change_pass(ctx, name):
 @click.option("--username", prompt=True, required=False, type=str, default="")
 @click.password_option("--password", prompt=True, confirmation_prompt=True, callback=check_pass_complexity, hide_input=True, required=True, type=str)
 @click.pass_context
-def delete_pass(ctx, name, username, password):
+def change_pass(ctx, name, username, password):
     db = ctx.obj.get("db")
     db.update_password(name, username, password)
     click.echo(f"Password with name {name} has been updated.")

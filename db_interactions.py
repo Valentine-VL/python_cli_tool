@@ -51,18 +51,22 @@ class DB:
         self.cursor.execute("SELECT name, username, hashed_password, date_updated FROM passwords WHERE name=?", (name,))
         row = list(self.cursor.fetchone())
         day_to_expiration = calculate_days_before_expiration(row[-1])
-        row[-1] = str(day_to_expiration) + " day(s)"
+        row[-1] = f"{day_to_expiration} day(s)"
         return dict(zip(["name", "username", "password", "expires in"], row))
 
     def list_passwords(self):
         self.cursor.execute("SELECT name, username, date_updated FROM passwords")
         rows = self.cursor.fetchall()
-        entries = [{"name": row[0], "username": row[1], "expires in": calculate_days_before_expiration(row[2])} for row in rows]
+        entries = [{"name": row[0], "username": row[1], "expires in": f"{calculate_days_before_expiration(row[2])} day(s)"} for row in rows]
         return entries
 
     def update_password(self, name, username, hashed_password):
-        self.cursor.execute("UPDATE passwords SET username=?, hashed_password=?, date_updated=CURRENT_TIMESTAMP WHERE name=?",
-                            (username, hashed_password, name))
+        if username:
+            self.cursor.execute("UPDATE passwords SET username=?, hashed_password=?, date_updated=CURRENT_TIMESTAMP WHERE name=?",
+                                (username, hashed_password, name))
+        else:
+            self.cursor.execute("UPDATE passwords SET hashed_password=?, date_updated=CURRENT_TIMESTAMP WHERE name=?",
+                                (hashed_password, name))
         self.conn.commit()
 
     def delete_password(self, name):

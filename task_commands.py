@@ -39,7 +39,7 @@ def list_tasks(ctx):
 @click.command()
 @click.option("--name", prompt=True, required=True, type=str)
 @click.pass_context
-def delete_task(ctx):
+def delete_task(ctx, name):
     db = ctx.obj.get("db")
-    task = db.list_tasks()
-    click.echo(f"Task '{task}' has been removed")
+    db.remove_task(name)
+    click.echo(f"Task '{name}' has been removed")

@@ -18,6 +18,7 @@ cli.add_command(password_commands.list_pass)
 cli.add_command(password_commands.get_pass)
 cli.add_command(password_commands.change_pass)
 cli.add_command(password_commands.delete_pass)
+cli.add_command(password_commands.gen_pass)
 
 cli.add_command(task_commands.add_task)
 cli.add_command(task_commands.list_tasks)

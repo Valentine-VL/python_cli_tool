@@ -49,8 +49,9 @@ class DB:
 
     def get_password(self, name):
         self.cursor.execute("SELECT name, username, hashed_password, date_updated FROM passwords WHERE name=?", (name,))
-        row = self.cursor.fetchone()
+        row = list(self.cursor.fetchone())
         day_to_expiration = calculate_days_before_expiration(row[-1])
+        row[-1] = str(day_to_expiration) + " day(s)"
         return dict(zip(["name", "username", "password", "expires in"], row))
 
     def list_passwords(self):

@@ -15,7 +15,6 @@ KEY = b'LGvyonxVcBtQ_hex3mYy28C1eWbwZ1aYM9_txSW0Lp0='
 def add_pass(ctx, name, username, password):
     db = ctx.obj.get("db")
     if name and password:
-        check_pass_complexity(password)
         encrypted_password = encrypt_password(KEY, password)
         db.add_password(name, username, encrypted_password)
         click.echo("Password added successfully!")
